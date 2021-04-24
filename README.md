@@ -1,6 +1,6 @@
 # OIV6-BBoxes-Cropper
 A simple python3 script for cropping images from the Open Images V6 image set along their bounding boxes, which is useful for creating creating custom datasets.
-The bounding box annotation CSV sheet has the following format:
+The bounding box annotation CSV sheet has the following format and can be downloaded here: https://storage.googleapis.com/openimages/web/index.html
 
 | ImageID          | Source | LabelName | Confidence | XMin   | XMax     | YMin     | YMax   | IsOccluded | IsTruncated | ... |
 |------------------|--------|-----------|------------|--------|----------|----------|--------|------------|-------------|-----|
