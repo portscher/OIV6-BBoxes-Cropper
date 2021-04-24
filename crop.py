@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 def crop_image(dir_path, filename, xmin, xmax, ymin, ymax):
     try:
-        img = Image.open(filename)
+        img = Image.open(f"{dir_path}{filename}")
         if img is not None:
             w, h = img.width, img.height
 
@@ -31,7 +31,6 @@ parser.add_argument('--bboxes_csv', required=True, help="Path to the csv files w
 args = parser.parse_args()
 
 cls_id = None
-
 # map the class name to its unique id, if it exists - otherwise end program
 with open('class-descriptions.csv') as id_mapping:
     id_mapping_reader = csv.reader(id_mapping, delimiter=',')
@@ -65,4 +64,5 @@ with open(args.bboxes_csv) as bboxes:
             ymax = float(row[7])
 
             filename = f"{img_name}.jpg"
+            print()
             crop_image(args.dir, filename, xmin, xmax, ymin, ymax)
