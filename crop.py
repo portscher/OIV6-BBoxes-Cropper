@@ -5,6 +5,14 @@ import csv
 from PIL import Image
 from tqdm import tqdm
 
+# positions of information in bounding box annotation sheet:
+IMG_NAME = 0
+CLASS_ID = 2
+XMIN = 4
+XMAX = 5
+YMIN = 6
+YMAX = 7
+
 
 def crop_image(dir_path, filename, xmin, xmax, ymin, ymax):
     try:
@@ -51,17 +59,17 @@ with open(args.bboxes_csv) as bboxes:
     bbox_reader = csv.reader(bboxes, delimiter=',')
 
     for row in tqdm(bbox_reader):
-        img_name = row[0]
+        img_name = row[IMG_NAME]
 
         # Ignore header
         if "ImageID" in img_name:
             continue
 
-        if cls_id in row[2]:
-            xmin = float(row[4])
-            xmax = float(row[5])
-            ymin = float(row[6])
-            ymax = float(row[7])
+        if cls_id in row[CLASS_ID]:
+            xmin = float(row[XMIN])
+            xmax = float(row[XMAX])
+            ymin = float(row[YMIN])
+            ymax = float(row[YMAX])
 
             filename = f"{img_name}.jpg"
             print()
