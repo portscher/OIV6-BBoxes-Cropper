@@ -86,5 +86,4 @@ with open(args.bboxes_csv) as bboxes:
             ymax = float(row[YMAX])
 
             filename = f"{img_name}.jpg"
-            print()
             crop_image(args.dir, filename, xmin, xmax, ymin, ymax)
