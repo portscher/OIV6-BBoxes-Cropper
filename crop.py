@@ -12,6 +12,8 @@ XMIN = 4
 XMAX = 5
 YMIN = 6
 YMAX = 7
+OCCLUDED = 8
+TRUNCATED = 9
 
 
 def crop_image(dir_path, filename, xmin, xmax, ymin, ymax):
@@ -35,6 +37,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--dir', required=True, help="Directory path")
 parser.add_argument('--classname', required=True, help="Class to identify")
 parser.add_argument('--bboxes_csv', required=True, help="Path to the csv files which contains the bounding boxes")
+parser.add_argument('--exclude_truncated', type=int, default=0, help="Exclude truncated objects? 0 for no, 1 for yes")
+parser.add_argument('--exclude_occluded', type=int, default=0, help="Exclude occluded objects? 0 for no, 1 for yes")
 
 args = parser.parse_args()
 
@@ -58,7 +62,17 @@ with open('class-descriptions.csv') as id_mapping:
 with open(args.bboxes_csv) as bboxes:
     bbox_reader = csv.reader(bboxes, delimiter=',')
 
+    exclude_truncated = args.exclude_truncated
+    exclude_occluded = args.exclude_occluded
+
     for row in tqdm(bbox_reader):
+        
+        if exclude_truncated and row[TRUNCATED] == 1:
+            continue
+
+        if exclude_occluded and row[OCCLUDED] == 1:
+            continue
+
         img_name = row[IMG_NAME]
 
         # Ignore header
