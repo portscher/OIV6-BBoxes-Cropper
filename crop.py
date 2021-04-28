@@ -17,20 +17,17 @@ TRUNCATED = 9
 
 
 def crop_image(dir_path, filename, xmin, xmax, ymin, ymax):
-    try:
-        img = Image.open(f"{dir_path}{filename}")
-        if img is not None:
-            w, h = img.width, img.height
+    with Image.open(f"{dir_path}{filename}") as img:
 
-            left = xmin * w
-            right = xmax * w
-            bottom = ymax * h
-            top = ymin * h
+        w, h = img.width, img.height
 
-            img = img.crop((left, top, right, bottom))
-            img.save(f"{dir_path}output/{filename}")
-    except FileNotFoundError:
-        pass
+        left = xmin * w
+        right = xmax * w
+        bottom = ymax * h
+        top = ymin * h
+
+        img = img.crop((left, top, right, bottom))
+        img.save(f"{dir_path}output/{filename}")
 
 
 parser = argparse.ArgumentParser()
